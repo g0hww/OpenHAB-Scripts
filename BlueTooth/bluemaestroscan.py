@@ -28,6 +28,7 @@ import os
 import sys
 import struct
 import bluetooth._bluetooth as bluez
+from ctypes import c_short
 
 LE_META_EVENT = 0x3e
 LE_PUBLIC_ADDRESS=0x00
@@ -175,7 +176,7 @@ def parse_events(sock, loop_count=100):
 #			  print "\tMAC Address string: ", returnstringpacket(pkt[report_pkt_offset + 3:report_pkt_offset + 9])
 			  tempString = returnstringpacket(pkt[report_pkt_offset + 23: report_pkt_offset + 25])
 #			  print "\tTemp: " , tempString 
-			  temp = float(returnnumberpacket(pkt[report_pkt_offset + 23:report_pkt_offset + 25]))/10
+			  temp = float(c_short(returnnumberpacket(pkt[report_pkt_offset + 23:report_pkt_offset + 25])).value)/10
 #			  print "\tTemp: " , temp
 			  sensor["temp"] = temp
 
@@ -185,8 +186,8 @@ def parse_events(sock, loop_count=100):
 			  sensor["humidity"] = humidity 
 
 
-			  dewpoint = float(returnnumberpacket(pkt[report_pkt_offset + 27:report_pkt_offset + 29]))/10
 #			  print "\tDewpoint: " ,dewpoint 
+			  dewpoint = float(c_short(returnnumberpacket(pkt[report_pkt_offset + 27:report_pkt_offset + 29])).value)/10
 			  sensor["dewpoint"] = dewpoint
 
 			  nameLength = int(returnstringpacket(pkt[report_pkt_offset + 32]))
