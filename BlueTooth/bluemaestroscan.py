@@ -186,8 +186,8 @@ def parse_events(sock, loop_count=100):
 			  sensor["humidity"] = humidity 
 
 
-#			  print "\tDewpoint: " ,dewpoint 
 			  dewpoint = float(c_short(returnnumberpacket(pkt[report_pkt_offset + 27:report_pkt_offset + 29])).value)/10
+#			  print "\tDewpoint: " ,dewpoint 
 			  sensor["dewpoint"] = dewpoint
 
 			  nameLength = int(returnstringpacket(pkt[report_pkt_offset + 32]))
